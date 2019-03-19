@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>我的购物车</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-select.min.css">
+
+    <script src="js/jquery-1.11.3.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+       .titleimg a:hover{ text-decoration:none;}
+       .titleimg a{ text-decoration:none;}
+        td img{
+            height: 50px;
+            width: 50px;
+        }
+       .table td {
+           text-align: center;
+           vertical-align: middle!important;
+       }
+       .table th{
+       		 text-align: center;
+       }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 titleimg" id="">
+            <a href="/bs"><img src="img/website02.png" alt=""><span class="" style="color:black;font-size: 25px;vertical-align:text-top"> 购物车</span></a>
+
+        </div>
+        <div class="col-md-10 col-md-offset-1">
+            <div id="jiesuantab" style="display: none">
+                <div class="row">
+                    <div class="col-md-7 pull-right">
+                        <select class="form-control" id="address" style="margin-bottom: 10px"></select>
+                    </div>
+                    <div class="col-md-2 pull-right">
+                        <label for="address" class="text-primary pull-right" style="line-height:35px">选择收货地址:</label>
+                    </div>
+                </div>
+                <table class="table table-striped titleimg" id="havegoods">
+                    <tr class="table-bordered"><th colspan="2">商品</th><th>价格</th><th>状态</th><th>操作</th></tr>
+                </table>
+                <div class="col-md-3 titleimg "><a href="javascript:void(0);" id="removeAll">移除购物车中所有商品</a></div>
+                <button type="button" id="jiesuan" class="btn btn-lg btn-danger pull-right" data-toggle="modal" data-target="#myModal">去结算</button>
+                <div class="pull-right">
+                    <span class="help-block" style="margin-right: 20px;float: left">共计：</span>
+                    <span style="padding:20px;color:red;font-size:20px;margin-right: 30px" id="total"></span>
+                </div>
+            </div>
+            <div style="width: 100%;height: 200px;display: none" id="nogoods">
+                <div class="titleimg" style="align:center;margin:150px auto;text-align:center">
+                    <img src="img/shopping-cart.jpg" alt=""><span>购物车空空如也&nbsp;&nbsp;</span><a href="/bs">前去购物></a>
+                </div>
+                <span>猜你喜欢：</span>
+                <hr>
+                <div class="row" style="padding: 10px" id="goodsMsg">
+
+
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--确认订单模态框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">确认订单</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="orderMsg">
+                        <strong>订单编号:</strong><span id="orderNo"></span><br>
+                        <strong>收货信息:</strong><span id="addressMsg"></span><br>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="orderSubmit">生成订单</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="js/cart.js"></script>
+</html>

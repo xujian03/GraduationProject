@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>求购专区</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-1.11.3.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/jigsaw.css">
+    <script src="js/jigsaw.js"></script>
+    <style>
+        body{
+            padding-top:70px;
+            background-color: rgb(220,239,254);
+        }
+        #msg {
+            width: 100%;
+            line-height: 40px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .bg a:hover{
+            text-decoration:none;
+        }
+        .bg a{
+            text-decoration:none;
+        }
+        .bg div:hover{
+            background-color: #eee;
+        }
+        .bg .col-md-10{
+            padding:10px 20px;
+            background-color:#fff;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="col-md-2">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                <span class="sr-only"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/bs/" class="navbar-brand">导航</a>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="collapse navbar-collapse navbar-responsive-collapse" style="margin-right: 150px">
+            <ul class="nav navbar-nav">
+                <li><a href="search">商品搜索</a></li>
+                <li id="qiugoubtn" style="display: none"><a href="#" data-toggle="modal" data-target="#uploadModal">发布求购</a></li>
+                <li><a href="">首页</a></li>
+                <li><a href="">首页</a></li>
+                <li class="nav-divider"> </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="" id="loginoruser">
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--登录模态框-->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 350px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">登录</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group">
+                        <label for="login_name" class="control-label">账号:</label>
+                        <input type="text" class="form-control" id="login_name" name="admin" placeholder="输入学号/邮箱" >
+                    </div>
+                    <div class="form-group">
+                        <label for="login_password" class="control-label">密码:</label>
+                        <input type="password" class="form-control" id="login_password" name="pwd"  placeholder="输入密码">
+                    </div>
+                    <div class="jigsaw1 form-group"><!--验证码 -->
+                        <div id="captcha" style="position: relative"></div>
+                        <div id="msg"></div>
+                    </div>
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary " disabled="disabled" value="" id="loginbtn">登录</button>
+                        </div>
+                    </div>
+                    <a href="/bs/login.html">手机端点击这里</a>
+                </form>
+            </div>
+            <div class="modal-footer" style="border-top: none;">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--登录模态框-->
+<script src="/bs/js/title.js"> </script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 col-md-offset-6">
+            <div class="input-group" style="margin-top: 20px">
+                <div class="input-icon-group">
+                    <div class="input-group" style="width:100%">
+                        <input id="keyword" type="text" class="form-control" placeholder="搜索(多个关键词请用空格分开)" data-clearbtn="true"/>
+                    </div>
+                </div>
+                <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" title="搜索" id="searchBtn"><span class="glyphicon glyphicon-search" ></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row"  style="margin-top: 10px">
+
+        <div class="bg">
+
+        </div>
+
+    </div>
+    <div class="row">
+        <ul class="pager">
+            <li><a  href="javascript:void(0);" id="uppage">上一页</a> </li>
+            <li><a href="javascript:void(0);" id="downpage">下一页</a> </li>
+            <lable for="indexpage">第</lable>
+            <select id="indexpage">
+
+            </select>
+        </ul>
+    </div>
+</div>
+
+
+<!-- 上传Modal -->
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadModalLabel">发布求购</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label for="buyingName">求购书籍名(长度保持在50个字符内)</label>
+                            <input type="text" class="form-control" id="buyingName" placeholder="书籍名">
+                        </div>
+                        <div class="form-group">
+                            <label for="buyingMsg">求购书籍详情(如作者，版本号 长度保持在100个字符内)</label>
+                            <input type="text" class="form-control" id="buyingMsg" placeholder="书籍详情">
+                        </div>
+                        <div class="form-group">
+                            <label for="buyingImg">书籍展示（可不填）</label>
+                            <input type="file" id="buyingImg" multiple="multiple">
+                            <p class="help-block">按住CTRL键可选择多张图片最多支持6张、支持图像格式：jpg,gif,png。</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" data-dismiss="" id="uploadbtn">上传</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/buy.js"></script>
+</body>
+</html>

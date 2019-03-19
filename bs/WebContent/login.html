@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+    <title>登录</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-select.min.css">
+    <script src="js/jquery-1.11.3.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap-select.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 visible-md visible-lg"  >
+            <div style="width: 100%;background-color:rgb(245,248,250);border: 0.5px solid #8ea9d5;">
+                <div style="width: 100%;background-color:rgb(160,205,235);padding: 5px" class="bg-primary"><span style="font-size: 25px">商品推荐</span>
+                    <button class="btn btn-default pull-right" onclick="getsuggest();"><span class="glyphicon glyphicon-repeat" style="line-height: 2px"></span><span>&nbsp;换一组</span></button>
+                </div>
+                <div class="row" style="padding: 10px" id="goodsMsg">
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div style="border: 0.5px solid #a1a1a1;padding: 15px;">
+                <form>
+                    <legend>网站登录</legend>
+                    <div class="form-group has-feedback"><!-- 学号-->
+                        <label for="emailOrStudentId">学号/邮箱：</label>
+                        <input type="text" class="form-control" placeholder="输入学号/邮箱" id="emailOrStudentId">
+                    </div>
+                    <div class="form-group has-feedback"><!--密码-->
+                        <label for="password">密码：</label>
+                        <input type="password" class="form-control" placeholder="输入密码" id="password">
+                    </div>
+                    <div class="form-group "><!-- 验证码-->
+                        <label for="yanzhengma">验证码：</label>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" placeholder="输入验证码" id="yanzhengma">
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="javascript:void(0);" onclick="changeImg()"><img src="user/imglogin" id="img_yanzhengma" alt="" class="img-responsive" style="border: 0px;"></a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <span id="dangermsg" class="text-left glyphicon glyphicon-remove-sign hidden  label label-danger"></span><br>
+                    <button type="button" class="btn btn-primary pull-right" id="submit1">提交</button>
+                    <br>
+                    <br>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="js/login.js"></script>
+</body>
+</html>

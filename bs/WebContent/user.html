@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+    <title>个人中心</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-select.min.css">
+    <script src="js/jquery-1.11.3.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="css/jigsaw.css">
+    <script src="js/jigsaw.js"></script>
+    <style>
+        body{padding-top:50px}
+        #msg {
+            width: 100%;
+            line-height: 40px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .bordertab1{
+            border-bottom: 1px 	Gray solid;
+            border-left: 1px 	Gray solid;
+            border-top: 1px 	Gray solid;
+            box-shadow: darkgrey 0px 10px 30px 5px ;
+        }
+        .bordertab{
+            border: 1px 	Gray solid;
+            box-shadow: darkgrey 10px 10px 30px 5px ;
+        }
+        .bg-menu {
+            color: MintCream;
+            background-color: MintCream;
+        }
+        .bg-body {
+            background-color: rgb(245,245,245);
+        }
+        .round{
+            border-radius: 15px;
+        }
+
+        .orderstyle{
+            padding:15px 10px;margin: 10px;
+        }
+        .fenge{
+            border-left: 1px #8c8c8c solid;
+            display: inline;
+            margin: 0 10px;
+        }
+        a.pagedisable {
+            color: #8c8c8c;
+        }
+        a:hover.pagedisable {
+            color: #8c8c8c;
+        }
+        .hrstyle {
+            width: 100%;
+            border-bottom:2px dashed #777777;
+            margin: 2px 0px;
+        }
+    </style>
+</head>
+
+<body class="bg-body">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="col-md-2">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                <span class="sr-only"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/bs/" class="navbar-brand">导航</a>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="collapse navbar-collapse navbar-responsive-collapse" style="margin-right: 150px">
+            <ul class="nav navbar-nav">
+                <li><a href="">商品搜索</a></li>
+                <li><a href="buy.html">求购专区</a></li>
+                <li><a href="">首页</a></li>
+                <li><a href="">首页</a></li>
+                <li class="nav-divider"> </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="" id="loginoruser">
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+<!--登录模态框-->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 350px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">登录</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group">
+                        <label for="login_name" class="control-label">账号:</label>
+                        <input type="text" class="form-control" id="login_name" name="admin" placeholder="输入学号/邮箱" >
+                    </div>
+                    <div class="form-group">
+                        <label for="login_password" class="control-label">密码:</label>
+                        <input type="password" class="form-control" id="login_password" name="pwd"  placeholder="输入密码">
+                    </div>
+                    <div class="jigsaw1 form-group"><!--验证码 -->
+                        <div id="captcha" style="position: relative"></div>
+                        <div id="msg"></div>
+                    </div>
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary " disabled="disabled" value="" id="loginbtn">登录</button>
+                        </div>
+                    </div>
+                    <a href="/bs/login.html">手机端点击这里</a>
+                </form>
+            </div>
+            <div class="modal-footer" style="border-top: none;">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--登录模态框-->
+<script src="/bs/js/title.js"> </script>
+<div class="modal fade" id="loadingModal">
+    <div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
+        <div class="progress progress-striped active" style="margin-bottom: 0;">
+            <div class="progress-bar" style="width: 100%;"></div>
+        </div>
+        <h4>正在加载...</h4>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3 col-xs-3 col-md-2 col-md-offset-1 " id="tab1" style="min-height:600px;">
+           <p> <img id="touxiang" src="" alt="头像获取失败" class="img-responsive img-rounded center-block"></p>
+            <br>
+           <div style="display: block;width: 100%"> <p id="yue" class="text-center" style="color:black;"></p></div>
+            
+            <ul class="nav nav-pills nav-stacked">
+                <li  class="active"><a href="#pan1" data-toggle="pill" ><span class="glyphicon glyphicon-user"></span> 账户信息</a></li>
+                <li><a href="#pan2" data-toggle="pill" id="A_dizhi"><span class="glyphicon glyphicon-cog"></span> 收货地址管理</a></li>
+                <li><a href="#pan3" data-toggle="pill" id="A_dingdan"><span class="glyphicon glyphicon-th-list"></span> 订单中心</a></li>
+                <li class="nav-divider"></li>
+                <li><a href="#pan4" data-toggle="pill" id="A_shangping"><span class="glyphicon glyphicon-book"></span> 售卖的商品</a></li>
+                <li><a href="#pan6" data-toggle="pill" id="A_fahuo"><span class="glyphicon glyphicon-inbox"></span> 待发货</a></li>
+                <li class="nav-divider"></li>
+                <li><a href="#pan7" data-toggle="pill" id="A_shouhuo"><span class="glyphicon glyphicon-check"></span> 待收货</a></li>
+                <li><a href="#pan8" data-toggle="pill" id="A_tuihuo"><span class="glyphicon glyphicon-export"></span> 退货中</a></li>
+                <li class="nav-divider"></li>
+                <li><a href="#pan5" data-toggle="pill" id="A_tongji"><span class="glyphicon glyphicon-list-alt"></span> 数据统计</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-xs-9 bg-danger col-md-8" id="tab" style="min-height:600px;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px">
+            <br>
+            <div class="tab-content">
+                <div class="tab-pane active  " id="pan1" style="padding:10px 10px;">
+                    <!--账户信息面板 -->
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1 bg-info round" style="padding: 10px 5px;">
+                            <h3>个人信息</h3>
+                            <p id="name"></p>
+                            <p id="studentid"></p>
+                            <p id="studentMsg"></p>
+                            <p id="youxiang"></p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1 bg-info round" style="padding: 10px 5px;">
+                            <br>
+                            <div class="form-group">
+                                <span style="float: left">更改头像：</span>
+                                <input type="file" id="img"  style="float: left">
+                                <button type="button" id="btnimg" class="btn btn-default " >提交</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1 bg-info round" style="padding: 10px 5px;">
+                            <br>
+                            <div class="form-group">
+                            <span>更改班级：</span><br>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <select class="form-control" id="xueyuan" style="margin-bottom: 15px">
+
+                                                </select>
+                                            </div>
+
+
+                                            <div class="col-sm-6">
+                                                <select class="form-control" id="banji" disabled="disabled" style="margin-bottom: 15px">
+                                                    　　
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" id="btnstudentmsg" class="btn btn-default">提交</button>
+                                    </div>
+
+                                </div>
+
+                        </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="tab-pane fade" id="pan2" style="padding:10px 10px;">
+                    <!-- 地址管理|-->
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1 bg-info round" style="padding: 10px 5px;">
+                            <br>
+                            <div class="form-group">
+                                <span>收货地址管理(最多支持7条记录)：</span><br>
+                                    <table class="table table-striped table table-bordered table-striped table-hover" id="addressList">
+                                    </table>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12" id="LableAddress"></div>
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <button type="button" class="btn btn-default form-control" data-toggle="modal" data-target="#myModal">添加</button>
+                                    </div>
+                                    <!-- 弹窗-->
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">添加地址</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group has-feedback"><!-- 姓名-->
+                                                                <label for="addressName">收件人姓名：</label>
+                                                                <input type="text" class="form-control" placeholder="输入收件人姓名" id="addressName">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group has-feedback"><!-- 手机号-->
+                                                                <label for="addressPhone">收件人手机号：</label>
+                                                                <input type="text" class="form-control" placeholder="输入收件人手机号" id="addressPhone">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="input_province">收件人地址：</label><br>
+
+                                                            <div class='col-md-4 text-center '>
+                                                                <select name="input_province" id="input_province"
+                                                                        class="form-control">
+                                                                </select>
+                                                            </div>
+                                                            <div class='col-md-4 text-center '>
+                                                                <select name="input_city" id="input_city" class="form-control">
+                                                                </select>
+                                                            </div>
+                                                            <div class='col-md-4 text-center '>
+                                                                <select name="input_area" id="input_area" class="form-control">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group"><!-- 详细地址-->
+                                                                    <br>
+                                                                    <input type="text" class="form-control" placeholder="输入收件人详细地址" id="addressMsg">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                    <button type="button" class="btn btn-primary" id="addressSubmit">提交</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pan3" style="padding:10px 10px;">
+                    <div class="row" style=" ">
+                        <div class="col-md-3 ">
+                            <label for="classOrder" class="" style="font-size: 20px">订单类型：</label>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="" class="form-control" id="classOrder">
+                                <option value="1">支付成功</option>
+                                <option value="0">全部订单</option>
+                                <option value="-1">支付失败</option>
+                                <option value="2">售后中..</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-md-1">
+                            <span class="text-primary" style="font-size: 20px">订单列表：</span>
+                        </div>
+                        <div class="col-md-10" id="order">
+
+                        </div>
+                        <ul class="pager">
+                            <li><a  href="javascript:void(0);" id="uppage">上一页</a> </li>
+                            <li><a href="javascript:void(0);" id="downpage">下一页</a> </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pan4">
+                    <div class="row" style="padding:10px 0px;">
+                        <div class="col-md-10 col-md-offset-1" id="goodsManage">
+                        </div>
+                    </div>
+                    <ul class="pager">
+                        <li><a  href="javascript:void(0);" id="uppagegoods">上一页</a> </li>
+                        <li><a href="javascript:void(0);" id="downpagegoods">下一页</a> </li>
+                    </ul>
+                </div>
+                <div class="tab-pane fade" id="pan6">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1" id="daifahuomsg">
+
+
+                        </div>
+                            <!-- 填写快递单号Modal -->
+                            <div class="modal fade" id="daiFaHuo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="">填写快递单号</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-6 form-group">
+                                                    <label for="kuaidi">快递名</label>
+                                                    <select name="" id="kuaidi" class="form-control">
+                                                        <option value="顺丰快递">顺丰快递</option>
+                                                        <option value="圆通快递">圆通快递</option>
+                                                        <option value="京东快递">京东快递</option>
+                                                        <option value="申通快递">申通快递</option>
+                                                        <option value="韵达快递">韵达快递</option>
+                                                        <option value="中通快递">中通快递</option>
+                                                        <option value="天天快递">天天快递</option>
+                                                        <option value="邮政快递">邮政快递</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 form-group">
+                                                    <label for="kuaididanhao">快递单号</label><input type="text" id="kuaididanhao" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="kuaidiqueren">确认</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pan7">
+                    <div class="col-md-10 col-md-offset-1" id="daishouhuomsg">
+                        <div class="alert alert-warning">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>一旦确认收货钱款将直接打到卖家账户，请确认不需要退货再点击</strong>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="tab-pane fade" id="pan8">
+                    售后中
+                </div>
+                <div class="tab-pane fade" id="pan5">
+                    数据统计
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+
+<!-- 快递model -->
+<div class="modal fade" id="kuaidiModal" tabindex="-1" role="dialog" aria-labelledby="kuaidiModalTitle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="kuaidiModalTitle"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1" id="kuaidiModalMsg">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: none;">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/china.js"></script>
+<script src="js/user.js"></script>
+<script src="js/userorder.js"></script>
+<script src="js/usergoods.js"></script>
+<script src="js/userdaifanhuo.js"></script>
+<script src="js/userdaishouhuo.js"></script>
+</html>
