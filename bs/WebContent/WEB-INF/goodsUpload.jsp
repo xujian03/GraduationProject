@@ -8,19 +8,83 @@
     <link rel="stylesheet" href="/bs/css/bootstrap.min.css">
     <link rel="stylesheet" href="/bs/css/bootstrap-select.min.css">
     <script src="/bs/js/jquery-1.11.3.js"></script>
+    <link rel="stylesheet" href="../css/jigsaw.css">
+    <script src="../js/jigsaw.js"></script>
 </head>
 <body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="col-md-2">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                <span class="sr-only"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/bs/" class="navbar-brand">导航</a>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="collapse navbar-collapse navbar-responsive-collapse" style="margin-right: 150px">
+            <ul class="nav navbar-nav">
+                <li><a href="../search">商品搜索</a></li>
+                <li><a href="../buy.html">求购专区</a></li>
+                <li class="nav-divider"> </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="" id="loginoruser">
 
+            </ul>
 
-    <div class="modal fade" id="loadingModal">
-        <div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
-            <div class="progress progress-striped active" style="margin-bottom: 0;">
+        </div>
+    </div>
+</nav>
+
+<!--登录模态框-->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 350px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">登录</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group">
+                        <label for="login_name" class="control-label">账号:</label>
+                        <input type="text" class="form-control" id="login_name" name="admin" placeholder="输入学号/邮箱" >
+                    </div>
+                    <div class="form-group">
+                        <label for="login_password" class="control-label">密码:</label>
+                        <input type="password" class="form-control" id="login_password" name="pwd"  placeholder="输入密码">
+                    </div>
+                    <div class="jigsaw1 form-group"><!--验证码 -->
+                        <div id="captcha" style="position: relative"></div>
+                        <div id="msg"></div>
+                    </div>
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary " disabled="disabled" value="" id="loginbtn">登录</button>
+                        </div>
+                    </div>
+                    <a href="/bs/login.html">手机端点击这里</a>
+                </form>
+            </div>
+            <div class="modal-footer" style="border-top: none;">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--登录模态框-->
+<script src="/bs/js/title.js"> </script>
+<div class="modal fade" id="loadingModal">
+    <div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
+        <div class="progress progress-striped active" style="margin-bottom: 0;">
             <div class="progress-bar" style="width: 100%;"></div>
         </div>
         <h4>正在加载...</h4>
-        </div>
     </div>
-
+</div>
 
 
   <div class="row">

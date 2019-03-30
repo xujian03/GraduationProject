@@ -26,11 +26,11 @@ $.ajax({
         var smallclass="";
         for(let i=0;i<msg.length;i++){
 
-            string+="<li class=\"target\"><a href=\"#pan"+(i+1)+"\" data-toggle=\"tab\" class='' >"+msg[i].obj.bigClass+"</a></li>";
+            string+="<li class=\"target\"><a href=\"#pan"+(i+1)+"\" data-toggle=\"tab\" class='jumptosearch' >"+msg[i].obj.bigClass+"</a></li>";
             var str="";
             for(let j=0;j<msg[i].list.length;j++){
                 str+="<div class=\"col-md-4 text-center menu1\" style=\"margin:5px 0px;\">" +
-                    " <a href=\"\">"+msg[i].list[j].smallClass+"</a>" +
+                    " <a href=\"search?keyword=&bigClass="+msg[i].obj.bigClass+"&smallClass="+msg[i].list[j].smallClass+"&isincludemygoods=0&sortby=1\">"+msg[i].list[j].smallClass+"</a>" +
                     "</div>";
             }
 
@@ -44,6 +44,10 @@ $.ajax({
         $("#classmenu").append(string);
         $("#smallclass").empty();
         $("#smallclass").append(smallclass);
+        $(".jumptosearch").click(function(){
+        	var bigClass=$(this).text();
+        	window.location.href="/bs/search?keyword=&bigClass="+bigClass+"&smallClass=&isincludemygoods=0&sortby=1"
+        })
         bindmenu();
     }
 });

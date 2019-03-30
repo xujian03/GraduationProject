@@ -4,7 +4,7 @@
 var user=getUser();
 if(user==null){
     alert("请先登录！");
-    window.location.href="/bs/login.html";
+    $("#loginModal").modal("show");
 }
 
 //loading页面设置

@@ -193,13 +193,32 @@
                    out.print(h);
         		}
         %>
-            
-
-
+        
         </div>
     </div>
-
+<div class="row">
+        <ul class="pager">
+          <% 
+          	String page1=request.getParameter("page");
+          	String count=request.getParameter("count");
+          	int pp=Integer.valueOf(page1);
+          	int cc=Integer.valueOf(count);
+          	out.print("<li><a  href=\"javascript:void(0);\" onclick=\"jumpwithparam('down');\" id=\"uppage\">上一页</a> </li><li><a href=\"javascript:void(0);\" onclick=\"jumpwithparam('up');\" id=\"downpage\">下一页</a> </li>");
+          	String pString="";
+          	for(int i=0;i<cc;i++)
+          	{
+          		if(i!=pp-1)
+          		pString+="<option value='"+(i+1)+"'>"+(i+1)+"页</option>";
+          		else pString+="<option value='"+(i+1)+"' selected='selected'>"+(i+1)+"页</option>";
+          	}
+          	out.print("<select id=\"indexpage\">"+pString+"</select>");
+          %>  
+		</ul>
 </div>
+</div>
+<script>
+  var countt=<%=cc %>
+</script>
 <script src="js/search.js"></script>
 </body>
 </html>
