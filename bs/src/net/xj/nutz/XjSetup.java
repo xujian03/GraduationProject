@@ -55,6 +55,7 @@ public class XjSetup implements Setup{
 		// TODO Auto-generated method stub
 		bsThread.interrupt();
 		orderThread.interrupt();
+		log.debug("*************************线程关闭***************************");
 	}
 
 }
