@@ -5,15 +5,22 @@ $.ajax({
         if(msg==null){
             haveNoUser();
         }else{
+        	$.ajax({
+        		url:'/bs/message/countmessage',
+        		type:'get',
+        		success:function(count){
+        			haveUser(msg,count);
+        		}
+        	})
             TUSER=msg;
-            haveUser(msg);
+            
         }
     }
 });
 
 $("body").css("padding-top",$("nav").height());
 //有用户时的导航栏
-function haveUser(user) {
+function haveUser(user,count) {
     let string="<li>" +
         "<a href=\"\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"+user.userName+" <span class=\"caret\"></span></a>" +
         "<ul class=\"dropdown-menu\">" +
@@ -22,7 +29,7 @@ function haveUser(user) {
         "<li class='text-center'><a href=\"/bs/user.html?tabid=A_dingdan\">我的订单</a></li>" +
         "<li class='text-center'><a href=\"/bs/user.html?tabid=A_shangping\">我的商品</a></li>" +
         "<li class='text-center'><a href=\"/bs/cart.html\">购物车</a></li>" +
-        "<li class='text-center'><a href=\"/bs/user.html\">我的消息&nbsp;<span class=\"badge\" style='background-color:red;'>5</span></a></li>" +
+        "<li class='text-center'><a href=\"/bs/user.html\">我的消息&nbsp;<span class=\"badge\" style='background-color:red;'>"+count+"</span></a></li>" +
         "</ul>" +
         "</li>" +
         "<li><a href=\"/bs/user/loginout\">登出</a></li>";

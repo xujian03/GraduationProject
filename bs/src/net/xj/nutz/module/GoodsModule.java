@@ -53,6 +53,7 @@ import net.xj.nutz.bean.Tb_gphoto;
 import net.xj.nutz.bean.Tb_order;
 import net.xj.nutz.bean.Tb_smallClass;
 import net.xj.nutz.bean.Tb_user;
+import net.xj.nutz.ext.Messages;
 
 @At("/goods")
 @IocBean
@@ -773,6 +774,8 @@ public class GoodsModule {
 		goodsComment.setGoodsCommentTime(df.format(new Date()));
 		dao.insert(goodsComment);
 		result.setInfo("评论成功！");
+		Tb_goods goods=dao.fetch(Tb_goods.class,goodsId);
+		Messages.addMessage(dao, goods.getUserId(), "/bs/goods/"+goodsId,user.getUserName()+ "评论了你的"+goods.getGoodsName()+"商品", 2);
 		result.setStatus(1);
 		return result;
 	}

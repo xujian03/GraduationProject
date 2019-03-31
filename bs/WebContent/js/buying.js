@@ -156,3 +156,22 @@ function getComment() {
 		}
 	})
 }
+//求购已完成按钮
+function buyingOver(id){
+	var isOver=confirm("是否关闭该求购？");
+	if(isOver==true){
+		$.ajax({
+			type:"post",
+			url:'/bs/buying/over',
+			data:{
+				bid:id
+			},
+			success:function(msg){
+				alert(msg.info);
+				window.location.reload();
+			}
+		});
+	}
+	
+}
+

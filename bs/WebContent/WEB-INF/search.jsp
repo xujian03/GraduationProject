@@ -192,6 +192,9 @@
                    " </a>";
                    out.print(h);
         		}
+        		if(list==null||list.size()==0){//当没有符合条件的商品出现的话，
+        			out.print("<div class='alert alert-success' role='alert'>sorry,暂无符合条件的商品。</div>");
+        		}
         %>
         
         </div>
@@ -203,7 +206,7 @@
           	String count=request.getParameter("count");
           	int pp=Integer.valueOf(page1);
           	int cc=Integer.valueOf(count);
-          	out.print("<li><a  href=\"javascript:void(0);\" onclick=\"jumpwithparam('down');\" id=\"uppage\">上一页</a> </li><li><a href=\"javascript:void(0);\" onclick=\"jumpwithparam('up');\" id=\"downpage\">下一页</a> </li>");
+          	out.print("<li><a  href=\"javascript:void(0);\" onclick=\"jumpwithparam('down',false);\" id=\"uppage\">上一页</a> </li><li><a href=\"javascript:void(0);\" onclick=\"jumpwithparam('up',false);\" id=\"downpage\">下一页</a> </li>");
           	String pString="";
           	for(int i=0;i<cc;i++)
           	{
@@ -217,7 +220,7 @@
 </div>
 </div>
 <script>
-  var countt=<%=cc %>
+  var countt=<%=cc %>;
 </script>
 <script src="js/search.js"></script>
 </body>

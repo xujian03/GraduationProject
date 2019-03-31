@@ -44,8 +44,8 @@
     <div class="col-md-9">
     <div class="collapse navbar-collapse navbar-responsive-collapse" style="margin-right: 150px">
         <ul class="nav navbar-nav">
-            <li><a href="">首页</a></li>
-            <li><a href="buy.html">求购专区</a></li>
+            <li><a href="../search">商品搜索</a></li>
+            <li><a href="../buy.html">求购专区</a></li>
             <li class="nav-divider"> </li>
         </ul>
         <ul class="nav navbar-nav navbar-right" style="" id="loginoruser">
@@ -163,8 +163,16 @@
                 </ul>
                 
             </div>
-
-
+			<div class="col-md-2">
+			<%
+			//是否为作者自己的发布的求购如果时则在页面上添加求购管理的按钮
+				String isMyBuying=request.getParameter("isMyBuying");
+                    		if(isMyBuying.equals("true")&&request.getParameter("buyingStatus").equals("0")){
+                    			out.print("<h4>求购管理</h4> <button class='btn btn-success' onclick='buyingOver("+request.getParameter("buyingId")+");'>求购已完成</button>");
+                    		}
+             %>
+			
+			</div>
         </div>
     </div>
 

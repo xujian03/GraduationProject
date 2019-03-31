@@ -86,26 +86,34 @@ function changeSmallClass(smallclass) {
 
 $(function () {
     $("#bigClass").change(function () {
-        jumpwithparam();
+        jumpwithparam(null,true);
     })
     $("#smallClass").change(function () {
-        jumpwithparam();
+        jumpwithparam(null,true);
     })
     $("input[type=radio][name='isIncludeMyGoods']").change(function () {
-        jumpwithparam();
+        jumpwithparam(null,true);
     })
     $("#sortby").change(function () {
-        jumpwithparam();
+        jumpwithparam(null,true);
     })
     $("#indexpage").change(function () {
-        jumpwithparam();
+        jumpwithparam(null,true);
     })
 })
 
-
-function jumpwithparam(upordown) {
+/**
+ * 
+ * @param upordown 翻页上一页下一页
+ * @param isfirstpage 是否将page变成第一页
+ */
+function jumpwithparam(upordown,isfirstpage) {
     var bigClass=$("#bigClass").val();
     var smallClass=$("#smallClass").val();
+    if(bigClass!=getParam("bigClass"))//如果选择框的大类别和url中的大类别不符合，那么说明大类别要更改，小类别就置空
+    {
+    	smallClass="";
+    }
     var isinclude= $("input[name='isIncludeMyGoods']:checked").val();
     var sortby=$("#sortby").val();
     var keyword=$("#keyword").val();
@@ -124,6 +132,7 @@ function jumpwithparam(upordown) {
     	if(page<countt)page++;
     	else return;
     }
+    if(isfirstpage==true)page=1;
     if(bigClass==null)bigClass="";
     if(smallClass==null)smallClass="";
     if(isinclude==null)isinclude="";
@@ -133,7 +142,7 @@ function jumpwithparam(upordown) {
 }
 
 $("#searchBtn").click(function () {
-    jumpwithparam();
+    jumpwithparam(null,true);
 })
 /**
  * 获取指定的URL参数值

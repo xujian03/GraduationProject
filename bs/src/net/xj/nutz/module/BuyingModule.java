@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.dao.pager.Pager;
@@ -46,6 +48,7 @@ import net.xj.nutz.bean.Tb_buyingComment;
 import net.xj.nutz.bean.Tb_buyingImg;
 import net.xj.nutz.bean.Tb_goodsComment;
 import net.xj.nutz.bean.Tb_user;
+import net.xj.nutz.ext.Messages;
 
 @At("/buying")
 @IocBean
@@ -182,6 +185,9 @@ public class BuyingModule {
 		    	dao.insert(comment);
 		    }
 		  });
+		//添加消息
+		Tb_buying buying=dao.fetch(Tb_buying.class, buyingId);
+		Messages.addMessage(dao, buying.getUserId(), "/bs/buying/"+buyingId, user.getUserName()+"回复了你关于‘"+buying.getBuyingName()+"’的求购帖子", 2);
 		result.setInfo("回复成功");
 		result.setStatus(1);
 		return result;
@@ -216,6 +222,37 @@ public class BuyingModule {
 	}
 	
 	/**----------------------回复接口结束   -------------------------------**/	
+	
+	@At("/over")
+	@Ok("json")
+	public Object buyingOver(@Param("bid")long buyingId,
+			@Attr("user")Tb_user user){
+		Result results=new Result();
+		if(user!=null){
+			Tb_buying buying=dao.fetch(Tb_buying.class,buyingId);
+			if(buying!=null&&buying.getUserId()==user.getUserId())
+			{
+				buying.setBuyingStatus(1);
+				dao.update(buying);
+				results.setInfo("求购关闭成功！");
+				return results;
+			}else{
+				results.setInfo("用户未登录！");
+				return results;
+			}
+			
+			
+		}
+		
+			results.setInfo("用户未登录！");
+			return results;
+		
+		
+	}
+	
+	
+	
+	
 	/**
 	 * 帖子的jsp映射
 	 * @param Id
@@ -223,7 +260,7 @@ public class BuyingModule {
 	 */
 	@At("/*")
 	@Ok(">>:/buy.html")
-	public Object buyingShow(String Id){
+	public Object buyingShow(String Id,@Attr("user")Tb_user user1){
 		long goodsId=0;
 		if(Id==null){
 			return null;
@@ -245,11 +282,15 @@ public class BuyingModule {
 		for(int i=0;i<imgs.size();i++){
 			strings+=imgs.get(i).getBuyingImgPath()+",";
 		}
+		boolean isMyBuying=false;
+		if(user1!=null&&user1.getUserId()==b.getUserId()){
+			isMyBuying=true;
+		}
 		Tb_user user=dao.fetch(Tb_user.class,b.getUserId());
 		return new JspView("../showBuying?buyingId="+b.getBuyingId()+"&buyingName="+b.getBuyingName()+
 				"&buyingMsg="+b.getBuyingMsg()+"&buyingImg="+strings+
 				"&userName="+b.getUserName()+"&buyingTime="+b.getBuyingTime()+"&userAvage="+user.getUserAvatar()+
-				"&buyingStatus="+b.getBuyingStatus());
+				"&buyingStatus="+b.getBuyingStatus()+"&isMyBuying="+isMyBuying);
 	}
 	
 	
