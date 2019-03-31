@@ -41,6 +41,7 @@ import org.nutz.log.Logs;
 import org.nutz.mvc.adaptor.JsonAdaptor;
 import org.nutz.mvc.annotation.AdaptBy;
 import org.nutz.mvc.annotation.At;
+import org.nutz.mvc.annotation.Attr;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.POST;
 import org.nutz.mvc.annotation.Param;
@@ -322,7 +323,50 @@ public class UserModule {
 	}
 	
 	
-	
+	//修改密码
+	@At("/newpasswd")
+	@POST
+	public Result newPasswd(@Attr("user")Tb_user user,
+							@Param("oldpasswd")String oldpasswd,
+							@Param("newpasswd")String newpasswd,
+							@Param("renewpasswd")String renewpasswd,HttpSession session){
+		Result result =new Result();
+		if(user==null){
+			result.setStatus(0);
+			result.setInfo("未登录！");
+			return result;
+		}
+		if(!newpasswd.equals(renewpasswd)){
+			result.setStatus(0);
+			result.setInfo("两次密码输入不一致！");
+			return result;
+		}
+		if(newpasswd.length()<6||newpasswd.length()>20){
+			result.setStatus(0);
+			result.setInfo("新密码长度应在6到20之间！");
+			return result;
+		}
+		if(newpasswd.equals(oldpasswd)){
+			result.setStatus(0);
+			result.setInfo("新密码不得与老密码相同！");
+			return result;
+		}
+		Mademd5 md = new Mademd5();
+		oldpasswd=md.toMd5(oldpasswd);
+		Tb_user user2=dao.fetch(Tb_user.class,Cnd.where("userId","=",user.getUserId()).and("userPassWord","=",oldpasswd));
+		if(user2==null){
+			result.setStatus(0);
+			result.setInfo("原密码输入错误！");
+			return result;
+		}
+		newpasswd=md.toMd5(newpasswd);
+		user2.setUserPassWord(newpasswd);
+		dao.update(user2);
+		loginout(session);
+		result.setStatus(1);
+		result.setInfo("改密成功请重新登陆");
+		return result;
+	}
 	
 	
 	/**

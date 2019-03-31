@@ -98,7 +98,7 @@ $(function () {
         jumpwithparam(null,true);
     })
     $("#indexpage").change(function () {
-        jumpwithparam(null,true);
+        jumpwithparam(null,false);
     })
 })
 

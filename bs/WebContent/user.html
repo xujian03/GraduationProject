@@ -156,6 +156,7 @@
                 <li><a href="#pan8" data-toggle="pill" id="A_tuihuo"><span class="glyphicon glyphicon-export"></span> 退货中</a></li>
                 <li class="nav-divider"></li>
                 <li><a href="#pan5" data-toggle="pill" id="A_tongji"><span class="glyphicon glyphicon-list-alt"></span> 数据统计</a></li>
+                <li><a href="#pan9" data-toggle="pill" id="A_tongzhi"><span class="glyphicon glyphicon-envelope"></span> 消息中心</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-xs-9 bg-danger col-md-8" id="tab" style="min-height:600px;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px">
@@ -215,9 +216,21 @@
                         </div>
                         </div>
                     </div>
-
+					<br>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1 bg-info round" style="padding: 10px 5px;">
+                            <h4>修改密码</h4>
+                            <button type="button" style='margin-left:20px;' class="btn btn-primary" data-toggle="modal" data-target="#pswModel">
+    							修改密码
+							</button>
+                        </div>
+                    </div>
 
                 </div>
+
+                
+                
+                
                 <div class="tab-pane fade" id="pan2" style="padding:10px 10px;">
                     <!-- 地址管理|-->
                     <div class="row">
@@ -404,6 +417,18 @@
                 </div>
                 <div class="tab-pane fade" id="pan5">
                     数据统计
+                    
+                </div>
+                <div class="tab-pane fade" id="pan9">
+                	<div class="row">
+                        <div class="col-md-10 col-md-offset-1 bg-info round" style="padding: 10px 5px;">
+                            <span style="font-size:20px">我的消息</span>
+                            <label style="margin-left:8px"><input name="isHaveRead" type="checkbox" value="1" />包含已读信息</label><br>
+                            <messages>
+                            
+                            </messages>
+                        </div>
+                    </div>
                 </div>
             </div>
             <br>
@@ -411,6 +436,34 @@
     </div>
 </div>
 
+                <!-- 修改密码的模态框 -->
+                <div class="modal fade" id="pswModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    				<div class="modal-dialog" role="document">
+        				<div class="modal-content">
+				            <div class="modal-header">
+				                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				                <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+				            </div>
+            			<div class="modal-body">
+            			  <div class="row">
+                			<div class="col-md-8 col-offset-md-2">
+                				<label for="studentId">原密码：</label>
+                    			<input type="password" class="form-control" placeholder="输入原密码" id="oldpassword"><br>
+                    			<label for="studentId">新密码：</label>
+                    			<input type="password" class="form-control" placeholder="输入原密码" id="newpassword"><br>
+                    			<label for="studentId">重复新密码：</label>
+                    			<input type="password" class="form-control" placeholder="输入原密码" id="renewpassword">
+                			</div>
+                		   </div>
+            			</div>
+            		<div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+		                <button type="button" class="btn btn-primary" id='passwordbtn' data-dismiss="modal">提交</button>
+            		</div>
+        			</div>
+    				</div>
+				</div>
+                
 
 <!-- 快递model -->
 <div class="modal fade" id="kuaidiModal" tabindex="-1" role="dialog" aria-labelledby="kuaidiModalTitle">
@@ -439,4 +492,5 @@
 <script src="js/usergoods.js"></script>
 <script src="js/userdaifanhuo.js"></script>
 <script src="js/userdaishouhuo.js"></script>
+<script src="js/usermessage.js"></script>
 </html>

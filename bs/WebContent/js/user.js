@@ -365,3 +365,32 @@ function loadHide(time) {
 function loadShow() {
     $("#loadingModal").modal('show');
 }
+
+
+//更改密码
+$("#passwordbtn").click(function(){
+	var passwd=$("#oldpassword").val();//旧密码
+	var passwd1=$("#newpassword").val();//新密码
+	var passwd2=$("#renewpassword").val();//重复新密码
+	if(passwd==''||passwd1==''||passwd2==''){
+		alert("有参数为空");
+		return;
+	}
+	$.ajax({
+		url:'user/newpasswd',
+		data:{
+			oldpasswd:passwd,
+			newpasswd:passwd1,
+			renewpasswd:passwd2,
+		},
+		type:'post',
+		success:function(msg){
+			alert(msg.info);
+			if(msg.status==1){
+				window.location.reload();
+			}
+		}
+	})
+})
+
+
