@@ -120,7 +120,7 @@ function userMag(count) {
                             "<span>"+TUSER.userName+"</span>\n" +
                             "<span>余额:"+TUSER.userMoney+"￥</span>\n" +
                             "<div class=\"menu1\">\n" +
-                                "<a href=\"\" style=\"color: #000066\">我的消息  <span class=\"badge\" style=\"background-color:#000066;size: 10px\" id=\"xiaoxi\">"+count+"</span></a>\n" +
+                                "<a href=\"user.html?tabid=A_tongzhi\" style=\"color: #000066\">我的消息  <span class=\"badge\" style=\"background-color:#000066;size: 10px\" id=\"xiaoxi\">"+count+"</span></a>\n" +
                             "</div>");
     }else {
         $("#usermsg").append("<div style=\"\">\n" +
