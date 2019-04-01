@@ -26,7 +26,7 @@ public class Tb_admin {
 	private String userId;
 	
 	@Column
-	private String password;
+	private transient String password;
 	
 	@Column
 	private String lastLoginTime;//上次登陆时间
