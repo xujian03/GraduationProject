@@ -16,7 +16,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="row">
+    <div class="row" style="margin-top:70px">
         <div class="col-md-offset-2 col-md-7 text-center">
             <img src="/bs/img/goods404.png" style="margin-right: 10px" alt=""><strong style="color:red">很抱歉，您查看的宝贝不存在，可能已下架或者被转移。</strong>
             <br>
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="row" style="margin-top: 50px">
+    <div class="row" style="margin-top: 50px;display:none">
         <span>推荐书籍：</span>
         <div style="width: 100%;border:0.5px solid rosybrown"></div>
     </div>
