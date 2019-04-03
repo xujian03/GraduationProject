@@ -8,6 +8,7 @@ addCollege();
 addBigClass();
 addSmallClass(0);
 addGoods(1);
+addApplication();
 var TOTALGOODS=1;//商品列表总共有几页
 var INDEXGOODS=1;//商品列表总共有几页
 //向用户表中添加用户信息
@@ -614,6 +615,69 @@ function unBannedGoods(uid){
 		success:function(msg){
 			if(msg.status!=1){alert(msg.info);return;}
 			addGoods(INDEXGOODS);
+		}
+	})
+}
+
+//申请list
+function addApplication(){
+	$.ajax({
+		url:'admin/getapplication',
+		success:function(msg){
+			$('#applicationTable').dataTable().fnDestroy();
+			$("#applicationlist").empty();
+			var string="";
+			for(var i=0;i<msg.length;i++)
+			{
+				var btn="<button onclick='passApplication("+msg[i].cashApplicationId+")' class='btn btn-success btn-xs'>通过申请</button>"+
+				"<button onclick='cancelApplication("+msg[i].cashApplicationId+")' class='btn btn-danger btn-xs'>拒绝申请</button>";
+
+				string+="<tr>"+
+						"<td>"+msg[i].cashApplicationId+"</td>"+
+						"<td>"+msg[i].alipayCount+"</td>"+            
+						"<td>"+msg[i].cashNumber+"</td>"+            
+						"<td>"+msg[i].userId+"</td>"+            
+						"<td>"+msg[i].cashApplicationTime+"</td>"+            
+						"<td>"+btn+"</td>"+
+						"</tr>";
+			}
+			$("#applicationlist").append(string);
+			$('#applicationTable').dataTable({
+	            "bFilter": false,
+	            "paging": false,
+	            "info": false
+	        });
+		}
+	})
+}
+
+//通过提现申请
+function passApplication(id){
+	$.ajax({
+		url:'admin/dealapplication',
+		type:'post',
+		data:{
+			aid:id,
+			passorcancel:"pass"
+		},
+		success:function(msg){
+			alert(msg.info);
+			addApplication();
+		}
+	})
+}
+//拒绝提现申请
+function cancelApplication(id){
+	$.ajax({
+		url:'admin/dealapplication',
+		type:'post',
+		data:{
+			aid:id,
+			passorcancel:"cancel"
+		},
+		success:function(msg){
+			alert(msg.info);
+			addApplication();
 		}
 	})
 }

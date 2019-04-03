@@ -90,7 +90,7 @@ function getMyGoods() {
                 $("#uppagegoods").addClass("pagedisable");
                 $("#downpagegoods").addClass("pagedisable");
                 $("#goodsManage").empty();
-                $("#goodsManage").append("<div class='row'><span class=\"label label-danger text-center\" style='text-align: center;display:block;margin: 10px 20px'>暂无此类订单！</span></div>");
+                $("#goodsManage").append("<div class='row'><span class=\"label label-danger text-center\" style='text-align: center;display:block;margin: 10px 20px'>暂无此类商品！</span></div>");
             }
         }
     })

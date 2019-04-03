@@ -195,6 +195,8 @@
                 					else if(goods.goodsStatus==0)document.write("<span style=\"padding-bottom:20px;padding-top:20px;color:red;font-size:20px;\">已下架，其他用户无法访问</span>");
                 					else if(goods.goodsStatus==4)document.write("<span style=\"padding-bottom:20px;padding-top:20px;color:green;font-size:20px;\">已发货</span>");
                 					else if(goods.goodsStatus==5)document.write("<span style=\"padding-bottom:20px;padding-top:20px;color:green;font-size:20px;\">已确认收货</span>");
+                					else if(goods.goodsStatus==6)document.write("<span style=\"padding-bottom:20px;padding-top:20px;color:red;font-size:20px;\">退货中</span>");
+                					else if(goods.goodsStatus==8)document.write("<span style=\"padding-bottom:20px;padding-top:20px;color:red;font-size:20px;\">退货完成</span>");
                                     </script>
                 				</div>
                 				<button class="btn btn-danger btn-lg" style="margin-top:20px;display:none" id="addBtn"><span style="margin-top:20px;font-family:STHupo;font-size:23px;margin:4px" id="addBtnMsg">加入购物车</span> </button>

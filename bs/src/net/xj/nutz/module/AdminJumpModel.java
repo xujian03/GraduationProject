@@ -21,12 +21,15 @@ import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.POST;
 import org.nutz.mvc.annotation.Param;
 import org.nutz.mvc.view.JspView;
+import org.nutz.trans.Atom;
+import org.nutz.trans.Trans;
 
 import com.ndktools.javamd5.Mademd5;
 
 import net.xj.nutz.bean.Result;
 import net.xj.nutz.bean.Tb_admin;
 import net.xj.nutz.bean.Tb_bigClass;
+import net.xj.nutz.bean.Tb_cashApplication;
 import net.xj.nutz.bean.Tb_classCollege;
 import net.xj.nutz.bean.Tb_classGrade;
 import net.xj.nutz.bean.Tb_goods;
@@ -464,4 +467,52 @@ public class AdminJumpModel {
 			return result;
 		}
 		
+		
+		//申请提现
+		@At("/admin/getapplication")
+		@Ok("json")
+		public Object getapplication(@Attr("admin")Tb_admin admin){
+			if(admin==null)return null;
+			List<Tb_cashApplication> list=dao.query(Tb_cashApplication.class, Cnd.where("cashApplicationStatus","=",0));
+			return list;
+		}
+		
+		@At("/admin/dealapplication")
+		@POST
+		@Ok("json")
+		public Object dealapplication(@Attr("admin")Tb_admin admin,
+									  @Param("aid")long aid,
+									  @Param("passorcancel")String poc)
+		{
+			Result result=new Result();
+			if(admin==null){
+				result.setInfo("未登录！");
+				result.setStatus(-1);
+				return result;
+			}
+			if(poc.equals("pass")){
+				Tb_cashApplication application=dao.fetch(Tb_cashApplication.class,aid);
+				if(application!=null){
+					application.setCashApplicationStatus(1);
+					dao.update(application);
+				}
+				
+			}else if(poc.equals("cancel")){
+				final Tb_cashApplication application=dao.fetch(Tb_cashApplication.class,aid);
+				if(application!=null&&application.getCashApplicationStatus()==0){
+					final Tb_user user=dao.fetch(Tb_user.class,application.getUserId());
+					user.setUserMoney(user.getUserMoney()+application.getCashNumber());
+					application.setCashApplicationStatus(-1);
+					Trans.exec(new Atom(){//事务
+					    public void run() {
+					        dao.update(application);
+					        dao.update(user);
+					    }
+					});
+				}
+			}
+			result.setInfo("处理成功！");
+			result.setStatus(1);
+			return result;
+		}
 }

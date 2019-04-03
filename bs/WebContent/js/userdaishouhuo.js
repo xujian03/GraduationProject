@@ -20,7 +20,7 @@ $.ajax({
                     "<a href=\"goods/"+msg.list[i].goodsId+"\" class=\"btn btn-default btn-xs\" target=\"_blank\" style=\"margin:5px 5px 5px 0px\">查看商品展示页面</a>" +
                     "<button  class=\"btn btn-default btn-xs\" target=\"_blank\" style=\"margin:5px 5px 5px 0px\" onclick='kuaidilujin("+"\""+msg.list[i].goodsName+"\","+msg.list[i].goodsId+")'>查看商品物流信息</button>"+
                     "<button class=\"btn btn-success btn-xs\" style=\"margin-right:5px\" onclick='queRenShouHuo("+msg.list[i].goodsId+")'>确认收货</button>" +
-                    "<button class=\"btn btn-warning btn-xs\">退货</button>" +
+                    "<button onclick='tuikuanMethod("+msg.list[i].goodsId+")' class=\"btn btn-warning btn-xs\">退货</button>" +
                     "</div>";
             }
             $("#daishouhuomsg").append(string);

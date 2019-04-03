@@ -197,8 +197,13 @@ public class OrderModule {
 		}
 		if(isCouldChange){//订单可以取消
 			if(order.getOrderTradeNo()!=null&&!order.getOrderTradeNo().equals("")){//支付宝退款
-				String code=refundOrder(order.getOrderOutTradeNo(),Float.toString(order.getOrderTotalAmount()));
+				if(order.getOrderCountMoney()==order.getOrderTotalAmount()){
+					String code=refundOrder(order.getOrderOutTradeNo(),Float.toString(order.getOrderTotalAmount()));
 				result.setObj("退款到支付宝");
+				}else{
+					result.setInfo("对不起，");result.setObj("无法退款到支付宝(有商品退货了)");result.setStatus(-2);return result;
+				}
+				
 			}else{//退款到余额
 				final float tuiKuan=order.getOrderCountMoney();
 				final long userId=user.getUserId();
@@ -220,7 +225,7 @@ public class OrderModule {
 			  });
 			result.setInfo("订单取消成功！");result.setStatus(1);return result;
 		}else{
-			result.setInfo("商品已经发货，无法取消订单！");result.setStatus(-2);return result;
+			result.setInfo("商品已经发货，无法取消订单！");result.setObj("");result.setStatus(-2);return result;
 		}
 
 	}

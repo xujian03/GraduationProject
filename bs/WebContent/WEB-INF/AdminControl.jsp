@@ -33,11 +33,12 @@
         <div class="col-sm-3 col-xs-3 col-md-2" id="tab1" style="min-height:600px;border-right:1px solid #555">
             <ul class="nav nav-pills nav-stacked">
                 <li  class="active"><a href="#pan1" data-toggle="pill" ><span class="glyphicon glyphicon-user"></span> 用户管理</a></li>
-                <li><a href="#pan5" data-toggle="pill" id="A_dizhi"><span class="glyphicon glyphicon-cog"></span> 商品管理</a></li>
-                <li><a href="#pan2" data-toggle="pill" id="A_dizhi"><span class="glyphicon glyphicon-cog"></span> 班级管理</a></li>
-                <li><a href="#pan3" data-toggle="pill" id="A_dingdan"><span class="glyphicon glyphicon-th-list"></span> 商品类别管理</a></li>
-                <li><a href="#pan4" data-toggle="pill" id="A_shangping"><span class="glyphicon glyphicon-book"></span> 发送通知</a></li>          
-                <li><a href="#pan6" data-toggle="pill" id="A_shangping"><span class="glyphicon glyphicon-book"></span> 用户活跃度</a></li>          
+                <li><a href="#pan5" data-toggle="pill" id=""><span class="glyphicon glyphicon-glass"></span> 商品管理</a></li>
+                <li><a href="#pan2" data-toggle="pill" id=""><span class="glyphicon glyphicon-blackboard"></span> 班级管理</a></li>
+                <li><a href="#pan3" data-toggle="pill" id=""><span class="glyphicon glyphicon-tasks"></span> 商品类别管理</a></li>
+                <li><a href="#pan4" data-toggle="pill" id=""><span class="glyphicon glyphicon-envelope"></span> 发送通知</a></li>          
+                <li><a href="#pan6" data-toggle="pill" id=""><span class="glyphicon glyphicon-signal"></span> 用户活跃度</a></li>          
+                <li><a href="#pan7" data-toggle="pill" id=""><span class="glyphicon glyphicon-yen"></span> 提现申请</a></li>          
             </ul>
         </div>
         <div class="col-sm-9 col-xs-9 col-md-10" id="tab" style="min-height:600px;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px">
@@ -363,7 +364,29 @@
                     </ul>
                 </div>
                 <div class="tab-pane fade" id="pan6">
-                    	<div id="userloginchart" style="width:1200px;height:500px">
+                    	<div id="userloginchart" style="width:1000px;height:450px">
+                    	</div>
+                </div>
+                 <div class="tab-pane fade" id="pan7">
+                    	<div class='row'>
+                    		<div class='col-md-10 col-offset-md-1'>
+                    			<table id="applicationTable" class="display" cellspacing="0" width="100%">
+						            <thead>
+						            <tr>
+						                <th>申请id</th>
+						                <th>支付宝账号</th>
+						                <th>申请金额</th>
+						                <th>用户id</th>
+						                <th>申请时间</th>
+						                <th>操作</th>
+						            </tr>
+						            </thead>
+						            <tbody id="applicationlist">
+						           
+						            
+						            </tbody>
+				        		</table>
+                    		</div>
                     	</div>
                 </div>
 			</div>

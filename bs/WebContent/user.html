@@ -155,7 +155,7 @@
                 <li><a href="#pan7" data-toggle="pill" id="A_shouhuo"><span class="glyphicon glyphicon-check"></span> 待收货</a></li>
                 <li><a href="#pan8" data-toggle="pill" id="A_tuihuo"><span class="glyphicon glyphicon-export"></span> 退货中</a></li>
                 <li class="nav-divider"></li>
-                <li><a href="#pan5" data-toggle="pill" id="A_tongji"><span class="glyphicon glyphicon-list-alt"></span> 数据统计</a></li>
+                <li><a href="#pan5" data-toggle="pill" id="A_tongji"><span class="glyphicon glyphicon-list-alt"></span> 提现申请</a></li>
                 <li><a href="#pan9" data-toggle="pill" id="A_tongzhi"><span class="glyphicon glyphicon-envelope"></span> 消息中心</a></li>
             </ul>
         </div>
@@ -413,10 +413,45 @@
 
 
                 <div class="tab-pane fade" id="pan8">
-                    售后中
+                    <div class="col-md-10 col-md-offset-1 bg-info round" style="padding: 10px 5px;" id='tuikuandiv'>
+                    		
+                    		
+                   </div>
                 </div>
                 <div class="tab-pane fade" id="pan5">
-                    数据统计
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1 bg-info round" style="padding: 10px 5px;">
+                            <div class='col-md-3' style="padding-bottom:10px">
+                            	<span style='font-size:20px'>提现申请</span>
+                            </div>
+                            <div class='col-md-4' style="padding-bottom:10px">
+                            	
+                            	<input type="text" class="form-control" placeholder="填入支付宝账号" id='alipaycount' >                            
+                            </div>
+                            <div class='col-md-4'>
+                            	
+	                            <div class="input-group" style="">
+	                				<div class="input-icon-group">
+					                    <div class="input-group" style="width:100%">
+					                        <input type="text" class="form-control" placeholder="提现金额" data-clearbtn="true" id="cashmoney"/>
+					                    </div>
+					                </div>
+					                <span class="input-group-btn">
+					                        <button class="btn btn-success" type="button" title="" id="cashbtn"><span class="" >确认提现</span></button>
+					                </span>
+					            </div>
+					            
+                            </div>                           
+                        </div>
+                    </div>
+                    <div class='row' style="margin-top:20px">
+                    	<div class="col-md-10 col-md-offset-1 bg-info round" style="padding: 10px 5px;">
+                    		我的提现申请:<br>
+                    		<div id='appliction'>
+                    		
+                    		</div>
+                    	</div>
+                    </div>
                     
                 </div>
                 <div class="tab-pane fade" id="pan9">
@@ -485,6 +520,57 @@
         </div>
     </div>
 </div>
+
+
+
+							<!-- 退款Modal -->
+                            <div class="modal fade" id="tuikuanmodel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel6">
+                                <div class="modal-dialog" role="document">
+                                
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="">填写退款商品的快递单号</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                        	<div class='row'>
+                                        		<div class="col-md-4 form-group">
+                                                    <label for="tkphone">收件人手机号</label><input type="text" id="tkphone" class="form-control">
+                                                </div>
+                                                <div class="col-md-4 form-group">
+                                                    <label for="tkname">收件人姓名</label><input type="text" id="tkname" class="form-control">
+                                                </div>
+                                                <div class="col-md-4 form-group">
+                                                    <label for="tkaddress">收件人地址</label><input type="text" id="tkaddress" class="form-control">
+                                                </div>
+                                        	
+                                        	</div>
+                                            <div class="row">
+                                                <div class="col-md-6 form-group">
+                                                    <label for="tkkuaidi">快递名</label>
+                                                    <select name="" id="tkkuaidi" class="form-control">
+                                                        <option value="顺丰快递">顺丰快递</option>
+                                                        <option value="圆通快递">圆通快递</option>
+                                                        <option value="京东快递">京东快递</option>
+                                                        <option value="申通快递">申通快递</option>
+                                                        <option value="韵达快递">韵达快递</option>
+                                                        <option value="中通快递">中通快递</option>
+                                                        <option value="天天快递">天天快递</option>
+                                                        <option value="邮政快递">邮政快递</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 form-group">
+                                                    <label for="tkkuaididanhao">快递单号</label><input type="text" id="tkkuaididanhao" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="tkkuaidiqueren">确认</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 </body>
 <script src="js/china.js"></script>
 <script src="js/user.js"></script>

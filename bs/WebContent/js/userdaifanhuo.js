@@ -12,7 +12,7 @@ $.ajax({
                 if(msg.list[i].goodsStatus==3)
                 {
                     btnbar="<button type=\"button\" class=\"btn btn-xs btn-primary pull-right\" data-toggle=\"modal\" data-target=\"#daiFaHuo\" onclick='bindFaHuoGoodsId("+msg.list[i].goodsId+")'>发货</button>" +
-                        "<button type=\"button\" class=\"btn btn-xs btn-primary pull-right\" style=\"margin-right: 15px\">当面交易成功</button>" +
+                        "<button type=\"button\" onclick='ftffahuo("+msg.list[i].goodsId+")' class=\"btn btn-xs btn-primary pull-right\" style=\"margin-right: 15px\">当面交易成功</button>" +
                         "<br>";
                 }else if(msg.list[i].goodsStatus==4){
                     btnbar= "<button type=\"button\" class=\"btn btn-xs btn-primary pull-right\" style=\"margin-right: 15px\" onclick='kuaidilujin("+"\""+msg.list[i].goodsName+"\","+msg.list[i].goodsId+")'>查看商品物流信息</button>" +
@@ -43,11 +43,27 @@ $.ajax({
 
         }else{
             $("#daifahuomsg").empty();
-            $("#daifahuomsg").append("<div class='row'><span class=\"label label-danger text-center\" style='text-align: center;display:block;margin: 10px 20px'>暂无此类订商品！</span></div>");
+            $("#daifahuomsg").append("<div class='row'><span class=\"label label-danger text-center\" style='text-align: center;display:block;margin: 10px 20px'>暂无此类商品！</span></div>");
         }
     }
 })
 
+function ftffahuo(goodsId){
+	var ischekc=confirm("是否通过当面交易将商品交给对方？");
+	if(ischekc){
+		$.ajax({
+			url:'goods/ftffahuo',
+			type:'post',
+			data:{goodsId:goodsId},
+			success:function(msg){
+				alert(msg.info);
+				if(msg.status==1){
+					window.location.reload();
+				}
+			}
+		})
+	}
+}
 
 
 function bindFaHuoGoodsId(id) {
@@ -81,3 +97,93 @@ function bindFaHuoGoodsId(id) {
         })
     }
 }
+
+
+/*     -----------     退款      ------------*/
+
+function tuikuanMethod(goodsId){
+	$("#tuikuanmodel").modal("show");
+	$("#tkkuaidiqueren").unbind();
+	$("#tkkuaidiqueren").click(function(){
+		var tkphone=$("#tkphone").val();
+		var tkname=$("#tkname").val();
+		var tkaddress=$("#tkaddress").val();
+		var tkkuaidi=$("#tkphone").val();
+		var tkkuaididanhao=$("#tkphone").val();
+		var dindanhao=GetDateNow();
+		$.ajax({
+			type:'post',
+			url:'goods/tuikuan',
+			data:{
+				tkphone:tkphone,
+				tkname:tkname,
+				tkaddress:tkaddress,
+				tkkuaidi:tkkuaidi,
+				tkkuaididanhao:tkkuaididanhao,
+				goodsId:goodsId,
+				orderNo:dindanhao
+			},
+			success:function(msg){
+				alert(msg.info);
+				if(msg.status==1)window.location.reload();
+			}
+		})
+	});
+	
+}
+tuikuantab();
+//退款的货物的tab
+function tuikuantab(){
+	$.ajax({
+		url:'goods/tuikuangoods',
+		success:function(msg){
+			var string='';
+			for(var i=0;i<msg.length;i++){
+				string+="<div style='margin-bottom:20px;border-bottom:1px solid #888;padding:15px 10px'>"+
+	                    		"<span>商品页面:<a href='/bs/goods/"+msg[i].goodsId+"'>前往</a></span><br>"+
+	                    		"<span>商品名称:"+msg[i].goodsName+"</span><br>"+
+	                    		"<span>快递名称:"+msg[i].goodsDeliveryName+"</span><br>"+
+	                    		"<span>快递单号:"+msg[i].goodsDeliveryNo+"</span><br>"+
+	                    		"<button onclick=(checkgoods("+msg[i].goodsId+")) class=\"btn btn-primary btn-xs\" title='钱将交还给买家'>确认收货</button>"+
+                    		"</div>";
+			}
+			$("#tuikuandiv").empty();
+			$("#tuikuandiv").append(string);
+			
+		}
+	})
+}
+
+//退货后卖家确认收货
+function checkgoods(id){
+	var ischeck=confirm("确认收货后钱将交还给卖家！");
+	if(ischeck){
+		$.ajax({
+			url:'goods/tuihuocheck',
+			type:'post',
+			data:{
+				goodsId:id
+			},
+			success:function(msg){
+				alert(msg.info);
+				if(msg.status==1){window.location.reload();}
+			}
+		})
+	}
+}
+
+
+//订单编号获取
+function GetDateNow() {
+    var vNow = new Date();
+    var sNow = "";
+    sNow += String(vNow.getFullYear());
+    sNow += String(vNow.getMonth() + 1);
+    sNow += String(vNow.getDate());
+    sNow += String(vNow.getHours());
+    sNow += String(vNow.getMinutes());
+    sNow += String(vNow.getSeconds());
+    sNow += String(vNow.getMilliseconds());
+    return sNow;
+}
+

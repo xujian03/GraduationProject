@@ -442,6 +442,27 @@ public class GoodsModule {
 		return result;
 	}
 	
+	
+	@At("/ftffahuo")//当面交易添加发货接口
+	@Ok("json")
+	@POST
+	public Object faHuo(@Param("goodsId")long goodsId,
+						@Attr("user")Tb_user user){
+		Result result =new Result();
+		if(user==null){result.setInfo("用户未登录！");result.setStatus(0);return result;}//用户登录检查
+		final Tb_goods goods=dao.fetch(Tb_goods.class,Cnd.where("userId","=",user.getUserId()).and("goodsStatus","=",3).and("goodsId","=",goodsId));
+		if(goods==null){result.setInfo("无此商品！");result.setStatus(-1);return result;}
+		goods.setGoodsStatus(4);
+		Trans.exec(new Atom(){//锁
+		    public void run(){
+		    	dao.update(goods);
+		    }
+		  });
+		result.setInfo("发货成功！");
+		result.setStatus(1);
+		return result;
+	}
+	
 	@At("/daishouhuo")//获取待收货列表
 	@Ok("json")
 	public Object daiShouHuo(@Attr("user")Tb_user user){
@@ -475,9 +496,12 @@ public class GoodsModule {
 		Tb_order order=dao.fetch(Tb_order.class,Cnd.where("orderOutTradeNo","=",goods.getOrderOutTradeNo()).and("userId","=",user.getUserId()));
 		if(order==null){result.setInfo("您未购买该商品！");result.setStatus(-2);return result;}
 		goods.setGoodsStatus(5);
+		final Tb_user user2=dao.fetch(Tb_user.class,goods.getUserId());
+		user2.setUserMoney(user2.getUserMoney()+goods.getGoodsPrice());
 		Trans.exec(new Atom(){//锁
 		    public void run(){
 		    	dao.update(goods);
+		    	dao.update(user2);
 		    }
 		  });
 		result.setStatus(1);
@@ -485,8 +509,103 @@ public class GoodsModule {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param user
+	 * @param goodsId 
+	 * @param tkphone 用于订单联系人
+	 * @param tkname用于订单联系人姓名
+	 * @param tkaddress用于订单联系人地址
+	 * @param tkkuaidi 用于订单快递
+	 * @param tkkuaididanhao用于快递单号
+	 * @return
+	 */
+	@At("/tuikuan")//退款接口
+	@Ok("json")
+	@POST
+	public Result tuiKuan(@Attr("user")Tb_user user,
+						  @Param("goodsId")long goodsId,
+						  @Param("tkphone")String tkphone,
+						  @Param("tkname")String tkname,
+						  @Param("tkaddress")String tkaddress,
+						  @Param("tkkuaidi")String tkkuaidi,
+						  @Param("tkkuaididanhao")String tkkuaididanhao,
+						  @Param("orderNo")String orderNo
+						  
+	){
+		Result result =new Result();
+		if(user==null){result.setInfo("用户未登录！");result.setStatus(0);return result;}//用户登录检查
+		if(isEmpty(tkphone)||isEmpty(tkname)||isEmpty(tkkuaidi)||isEmpty(tkaddress)||isEmpty(tkkuaididanhao)){result.setInfo("参数不得为空！");result.setStatus(0);return result;}
+		final Tb_goods goods=dao.fetch(Tb_goods.class,goodsId);
+		if(goods==null||goods.getGoodsStatus()!=4){result.setInfo("商品不存在！");result.setStatus(0);return result;}
+		final Tb_order order=dao.fetch(Tb_order.class,Cnd.where("orderOutTradeNo","=",goods.getOrderOutTradeNo()));
+		if(order==null||order.getUserId()!=user.getUserId()){result.setInfo("订单不属于您！");result.setStatus(0);return result;}
+		order.setOrderCountMoney(order.getOrderCountMoney()-goods.getGoodsPrice());
+		int count=dao.count(Tb_goods.class,Cnd.where("orderOutTradeNo","=",order.getOrderOutTradeNo()));
+		if(count==1){//说明该订单没有商品了，就将订单状态改为-1
+			order.setOrderStatus(-1);
+		}
+		final Tb_order order2=new Tb_order();
+		order2.setAddressMsg(tkaddress);
+		order2.setAddressPhone(tkphone);
+		order2.setAddressName(tkname);
+		goods.setGoodsDeliveryName(tkkuaidi);
+		goods.setGoodsDeliveryNo(tkkuaididanhao);
+		goods.setGoodsStatus(6);
+		goods.setOrderStatus(10);
+		goods.setOrderOutTradeNo(orderNo);
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		order2.setOrderTime(df.format(new Date()));
+		order2.setOrderStatus(10);
+		order2.setOrderCountMoney(goods.getGoodsPrice());
+		order2.setUserId(user.getUserId());
+		order2.setOrderOutTradeNo(orderNo);
+		Trans.exec(new Atom(){//锁
+		    public void run(){
+		    	dao.fastInsert(order2);
+		    	dao.update(order);
+		    	dao.update(goods);
+		    }
+		  });
+		result.setStatus(1);
+		result.setInfo("退货申请成功！");
+		return result;
+	}
 	
+	@At("/tuikuangoods")//退款中的货物（卖家）
+	@Ok("json")
+	public Object tuikuangoods(@Attr("user")Tb_user user){
+		if(user==null)return null;
+		List<Tb_goods> goods=dao.query(Tb_goods.class, Cnd.where("goodsStatus","=",6).and("userId","=",user.getUserId()));
+		return goods;
+	}
 	
+	@At("/tuihuocheck")//确认收货（卖家）
+	@Ok("json")
+	public Object tuihuocheck(@Attr("user")Tb_user user,
+							  @Param("goodsId")long goodsId){
+		Result result =new Result();
+		if(user==null){result.setInfo("用户未登录！");result.setStatus(0);return result;}//用户登录检查
+		if(goodsId==0){result.setInfo("商品不存在！");result.setStatus(0);return result;}
+		final Tb_goods goods=dao.fetch(Tb_goods.class,goodsId);
+		if(goods==null||goods.getUserId()!=user.getUserId()||goods.getGoodsStatus()!=6){result.setInfo("商品不存在1！");result.setStatus(0);return result;}
+		goods.setGoodsStatus(8);
+		goods.setOrderStatus(20);
+		final Tb_order order=dao.fetch(Tb_order.class,Cnd.where("orderOutTradeNo","=",goods.getOrderOutTradeNo()));
+		final Tb_user user2=dao.fetch(Tb_user.class,order.getUserId());
+		user2.setUserMoney(user2.getUserMoney()+order.getOrderCountMoney());
+		order.setOrderStatus(20);
+		Trans.exec(new Atom(){//锁
+		    public void run(){
+		    	dao.update(goods);
+		    	dao.update(user2);
+		    	dao.update(order);
+		    }
+		  });
+		result.setInfo("已将钱款退给买家");
+		result.setStatus(1);
+		return result;
+	}
 	/**
 	 * 获取商品类别中的大类别
 	 * @return

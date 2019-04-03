@@ -394,3 +394,54 @@ $("#passwordbtn").click(function(){
 })
 
 
+/**
+ * 提现按钮
+ */
+$("#cashbtn").click(function(){
+	var money=$("#cashmoney").val();
+	var count=$("#alipaycount").val();
+	if(isMoney(money)){
+		$.ajax({
+			url:'user/cashapplication',
+			type:'post',
+			data:{
+				money:money,
+				alipaycount:count
+			},
+			success:function(msg){
+				alert(msg.info);
+				if(msg.status==1){
+					window.location.reload();
+				}
+			}
+		})
+	}
+})
+
+
+//是否为金钱
+function isMoney(money){
+    var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+        if (reg.test(money)) {
+             return true;
+        }else{
+             return false;
+        };
+}
+
+
+$.ajax({
+	url:'user/getapplication',
+	success:function(msg){
+		var string='';
+		for(var i=0;i<msg.length;i++){
+			var status="待审核";
+			if(msg[i].cashApplicationStatus==1)
+				status="审核通过提现成功！";
+			else if(msg[i].cashApplicationStatus==-1)
+				status="审核失败！";
+			string+="时间:"+msg[i].cashApplicationTime+"金额:"+msg[i].cashNumber+"状态："+status+"<br>";
+		}
+		$("#appliction").append(string);
+	}
+})

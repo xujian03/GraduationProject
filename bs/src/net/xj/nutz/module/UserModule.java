@@ -61,6 +61,7 @@ import net.xj.nutz.module.CreateImageCode;
 import net.xj.nutz.bean.Result;
 import net.xj.nutz.bean.Tb_address;
 import net.xj.nutz.bean.Tb_bigClass;
+import net.xj.nutz.bean.Tb_cashApplication;
 import net.xj.nutz.bean.Tb_classCollege;
 import net.xj.nutz.bean.Tb_classGrade;
 import net.xj.nutz.bean.Tb_goods;
@@ -799,6 +800,45 @@ public class UserModule {
 		}
 		
 		
+		return list;
+	}
+	
+	@At("/cashapplication")//提现申请
+	@Ok("json")
+	@POST
+	public Object cashApplication(@Attr("user")Tb_user user,
+								  @Param("money")float money,
+								  @Param("alipaycount")String count){
+		Result result=new Result();
+		if(user==null){result.setStatus(-1);result.setInfo("未登录~");return result;}
+		final Tb_user user2=dao.fetch(Tb_user.class,user.getUserId());
+		if(user2.getUserMoney()<money){result.setStatus(-1);result.setInfo("余额不足~");return result;}
+		if(count==null||count.length()==0){result.setStatus(-1);result.setInfo("账号输入错误");return result;}
+		final Tb_cashApplication application=new Tb_cashApplication();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		application.setAlipayCount(count);
+		application.setCashApplicationTime(df.format(new Date()));
+		application.setCashNumber(money);
+		application.setCashApplicationStatus(0);
+		application.setUserId(user2.getUserId());
+		user2.setUserMoney(user2.getUserMoney()-money);
+		Trans.exec(new Atom(){//事务
+		    public void run() {
+		        dao.fastInsert(application);
+		        dao.update(user2);
+		    }
+		});
+		result.setStatus(1);result.setInfo("提现申请成功！");
+		return result;
+	}
+	
+	
+	
+	@At("/getapplication")//获取本人提现申请
+	@Ok("json")
+	public Object cashApplication(@Attr("user")Tb_user user){
+		if(user==null)return null;
+		List<Tb_cashApplication> list=dao.query(Tb_cashApplication.class, Cnd.where("userId","=",user.getUserId()).orderBy("cashApplicationTime", "desc"));
 		return list;
 	}
 	
