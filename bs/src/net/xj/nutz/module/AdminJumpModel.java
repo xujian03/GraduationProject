@@ -69,7 +69,7 @@ public class AdminJumpModel {
 		Tb_admin admin=dao.fetch(Tb_admin.class,Cnd.where("userId","=",userId).and("password","=",password));
 		if(admin!=null){
 			session.setAttribute("admin", admin);
-			admin.setLastLoginIp(req.getRemoteAddr());
+			admin.setLastLoginIp(getIpAddress(req));
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			admin.setLastLoginTime(df.format(new Date()));
 			dao.update(admin);
@@ -515,4 +515,28 @@ public class AdminJumpModel {
 			result.setStatus(1);
 			return result;
 		}
+		
+		
+		    public  String getIpAddress(HttpServletRequest request) {  
+			         String ip = request.getHeader("x-forwarded-for");  
+			         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
+			             ip = request.getHeader("Proxy-Client-IP");  
+			         }  
+			         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
+			             ip = request.getHeader("WL-Proxy-Client-IP");  
+			         }  
+			         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
+			             ip = request.getHeader("HTTP_CLIENT_IP");  
+			         }  
+			         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
+			             ip = request.getHeader("HTTP_X_FORWARDED_FOR");  
+			         }  
+			         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
+			             ip = request.getRemoteAddr();  
+			         }  
+			         return ip;  
+			     }
+		
+		
+		
 }

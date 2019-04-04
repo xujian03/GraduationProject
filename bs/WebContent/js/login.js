@@ -74,7 +74,7 @@ function getsuggest() {
             var string="";
             $("#goodsMsg").empty();
             for(var i=0;i<msg.total;i++){
-                string+="<div class=\"col-md-4\" style=\"margin-bottom:10px \">" +
+                string+="<div class=\"col-md-4\" style=\"margin-bottom:10px;height:300px \">" +
                     "<div  style=\"border: 1px solid grey;background-color:white\" class=\"text-center\">" +
                     "<img src=\""+msg.obj[i]+" \" class=\"img-responsive\" alt=\"商品推荐\">" +
                     "<div style=\"padding: 5px\">" +
