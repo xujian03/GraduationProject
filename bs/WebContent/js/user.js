@@ -415,6 +415,8 @@ $("#cashbtn").click(function(){
 				}
 			}
 		})
+	}else{
+		alert("输入的不是金额！");
 	}
 })
 
