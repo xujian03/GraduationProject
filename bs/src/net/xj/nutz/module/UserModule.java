@@ -686,6 +686,11 @@ public class UserModule {
 		return optionString;
 	}
 	
+	/**
+	 * 通过学院名获取班级，并转为html代码
+	 * @param college
+	 * @return
+	 */
 	@At("/getgrade")
 	public String getGrade(@Param("college")String college){
 		List<Tb_classGrade> list=null;
@@ -706,7 +711,13 @@ public class UserModule {
 		
 		return optionString;
 	}
-	
+	/**
+	 * 获取各种类别的所有订单的接口
+	 * @param page
+	 * @param type
+	 * @param session
+	 * @return
+	 */
 	@At("/getorder")
 	@Ok("json")
 	public Object getOrder(@Param("page")int page,@Param("type")int type,HttpSession session){

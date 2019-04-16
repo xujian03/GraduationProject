@@ -25,6 +25,12 @@ public class MessageModel {
 	private Dao dao;
 	private static final Log log=Logs.get();
 	
+	/**
+	 * 用户获取消息的接口
+	 * @param user
+	 * @param ishaveRead
+	 * @return
+	 */
 	@At("/getmessage")
 	@Ok("json")
 	public Object getMessage(@Attr("user")Tb_user user,
@@ -40,7 +46,11 @@ public class MessageModel {
 		}
 		return list;
 	}
-	
+	/**
+	 * 用户有几条未读信息的接口
+	 * @param user
+	 * @return
+	 */
 	@At("/countmessage")
 	public int countMessage(@Attr("user")Tb_user user){
 		if(user==null){

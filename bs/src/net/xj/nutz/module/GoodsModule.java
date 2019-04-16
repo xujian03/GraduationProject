@@ -153,6 +153,17 @@ public class GoodsModule {
 		return new JspView("../../editGoods?goods="+Json.toJson(goods, JsonFormat.compact()));
 		
 	}
+	/**
+	 * 修改商品信息
+	 * @param id
+	 * @param goodsName
+	 * @param goodsDescribe
+	 * @param bigClass
+	 * @param smallClass
+	 * @param goodsPrice
+	 * @param user
+	 * @return
+	 */
 	@At("/editgoods")
 	@POST
 	@AdaptBy(type=UploadAdaptor.class)
@@ -215,7 +226,12 @@ public class GoodsModule {
 		}else {result.setInfo("该商品不属于你！");result.setStatus(-2);return result;}
 	}
 	
-	
+	/**
+	 * 上架商品
+	 * @param id
+	 * @param user
+	 * @return
+	 */
 	@At("/shelf")//上架
 	@POST
 	public Object shelfGoods(@Param("id")String id,@Attr("user")Tb_user user){
@@ -382,6 +398,11 @@ public class GoodsModule {
 		return result;
 	}
 	
+	/**
+	 * 获取待发货商品
+	 * @param user
+	 * @return
+	 */
 	@At("/daifahuo")//待发货商品 商品状态  3 4
 	@Ok("json")
 	public Object daiFaHuo(@Attr("user")Tb_user user){
@@ -417,7 +438,7 @@ public class GoodsModule {
 		return result;
 	}
 	
-	@At("/fahuo")//添加发货接口
+	@At("/fahuo")//发货接口
 	@Ok("json")
 	@POST
 	public Object faHuo(@Param("goodsId")long goodsId,

@@ -97,6 +97,12 @@ public class BuyingModule {
 		return result;
 	}
 	
+	/**
+	 * 搜索求购
+	 * @param page
+	 * @param keyWord
+	 * @return
+	 */
 	@At("/getbuying")
 	@Ok("json")
 	public Object getBuying(@Param("page")int page,
@@ -141,6 +147,17 @@ public class BuyingModule {
 	
 	
 	/**----------------------回复接口开始   -------------------------------**/
+	/**
+	 * 回复别人
+	 * @param buyingId
+	 * @param buyingMsg
+	 * @param isDoubleComment
+	 * @param isHaveReplyUser
+	 * @param flowCommentId
+	 * @param flowUserId
+	 * @param user
+	 * @return
+	 */
 	@At("/postcomment")
 	@POST
 	@Ok("json")
@@ -222,7 +239,12 @@ public class BuyingModule {
 	}
 	
 	/**----------------------回复接口结束   -------------------------------**/	
-	
+	/**
+	 * 关闭求购帖子
+	 * @param buyingId
+	 * @param user
+	 * @return
+	 */
 	@At("/over")
 	@Ok("json")
 	public Object buyingOver(@Param("bid")long buyingId,

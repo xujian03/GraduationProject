@@ -622,7 +622,13 @@ public class OrderModule {
 		return result;
 	}
 	
-	@At("/getorderlist")//获取某个订单no中包含的商品
+	/**
+	 * //获取某个订单no中包含的商品
+	 * @param session
+	 * @param outTradeNo
+	 * @return
+	 */
+	@At("/getorderlist")
 	public String getOrderList(HttpSession session,
 								@Param("outTradeNo")String outTradeNo){
 		String string=null;

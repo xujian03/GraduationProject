@@ -47,7 +47,7 @@ public class AdminJumpModel {
 	private Dao dao;
 	private static final Log log=Logs.get();
 
-	
+	//访问/admin后接口根据是否登录管理员账号来返回jsp，未登录返回登录页面，已登录返回管理页面
 	@At("/admin")
 	public JspView admin(@Attr("admin")Tb_admin admin){
 		if(admin==null){
@@ -57,6 +57,14 @@ public class AdminJumpModel {
 		}
 	}
 	
+	/**
+	 * 管理员登录接口
+	 * @param userId
+	 * @param password
+	 * @param req
+	 * @param session
+	 * @return
+	 */
 	@At("/admin/login")
 	@POST
 	@Ok(">>:/admin")
@@ -516,7 +524,7 @@ public class AdminJumpModel {
 			return result;
 		}
 		
-		
+			//根据request获取ip地址
 		    public  String getIpAddress(HttpServletRequest request) {  
 			         String ip = request.getHeader("x-forwarded-for");  
 			         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  

@@ -29,6 +29,17 @@ public class SearchModule {
 	
 	private static final Log log = Logs.get();
 	
+	/**
+	 * 搜索返回搜索页面
+	 * @param keyword
+	 * @param bigClass
+	 * @param smallClass
+	 * @param page
+	 * @param isinclude
+	 * @param sortby
+	 * @param user
+	 * @return
+	 */
 	@At("/search")
 	public Object searchJsp(@Param("keyword")String keyword,
 							@Param("bigClass")String bigClass,
