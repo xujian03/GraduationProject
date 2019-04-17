@@ -890,7 +890,7 @@ public class UserModule {
 			message.setSubject("易书网-验证码");
 			// 设置内容
 			String code=randomText();			
-			String msg=new String("<table style='border: 1px solid black;'border='1' cellspacing='0'><tr><th>你的邮箱地址</th><th>验证码</th></tr><tr><td>"+email+"</td><td>"+code+"</td></tr></table>");
+			String msg=new String("<table style='border: 1px solid black;'border='1' cellspacing='0'><tr><th style='font-size:20px'>你的邮箱地址</th><th style='font-size:20px'>验证码</th></tr><tr><td  style='font-size:20px'>"+email+"</td><td style='color:red;font-size:20px'>"+code+"</td></tr></table>");
 			message.setContent(msg, "text/html;charset=utf-8");
 			
 			// 3.创建 Transport用于将邮件发送

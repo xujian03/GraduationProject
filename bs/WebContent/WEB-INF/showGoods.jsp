@@ -7,6 +7,7 @@
    	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
     <title>商品</title>
     <link rel="stylesheet" href="/bs/css/bootstrap.min.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" href="/bs/css/reset.css">
     <script src="/bs/js/jquery-1.11.3.js"></script>
        <link rel="stylesheet" href="/bs/css/jigsaw.css">

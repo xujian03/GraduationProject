@@ -373,7 +373,8 @@ function addGrade(collegeId){
 			$('#gradeTable').dataTable({
 	            "bFilter": false,
 	            "paging": false,
-	            "info": false
+	            "info": false,
+	            "pagingType": "full_numbers"
 	        });
 		}
 	})

@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>商品不存在</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
     <meta http-equiv="refresh" content="5;url=/bs">
     <link rel="stylesheet" href="/bs/css/bootstrap.min.css">
     <link rel="stylesheet" href="/bs/css/bootstrap-select.min.css">
