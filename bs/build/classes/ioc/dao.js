@@ -18,9 +18,9 @@ var ioc = {
             type : "org.nutz.dao.impl.NutDao",
             args : [{refer:"dataSource"}]
         },
-		user:{
-			name:'admin',
-			passwd:'123456',
+		tb_admin:{//初始化管理员账号密码
+			userId:'admin',
+			password:'123456',
 		},
 
 };

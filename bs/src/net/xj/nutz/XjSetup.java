@@ -9,6 +9,9 @@ import org.nutz.mvc.NutConfig;
 import org.nutz.mvc.Setup;
 import org.nutz.resource.Scans;
 
+import com.ndktools.javamd5.Mademd5;
+
+import net.xj.nutz.bean.Tb_admin;
 import net.xj.nutz.bean.Tb_user;
 import net.xj.nutz.ext.BsThread;
 import net.xj.nutz.ext.OrderThread;
@@ -36,6 +39,14 @@ public class XjSetup implements Setup{
 		orderThread=new OrderThread();
 		orderThread.start();
 		
+		Tb_admin admin=config.getIoc().get(Tb_admin.class);//获取admin账号密码
+		
+		if(dao.count(Tb_admin.class)==0){//数据库没有admin账号的时候自动生成一个从ioc中获取的admin账号
+			Mademd5 md = new Mademd5();
+			String password=md.toMd5(admin.getPassword());
+			admin.setPassword(password);
+			dao.fastInsert(admin);
+		}
 		//Daos.migration(dao, "net.xj.nutz.bean", true, false, false);//表字段新增后使用
 		
 		/*User admin=config.getIoc().get(User.class);

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>修改商品</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" href="/bs/css/bootstrap.min.css">
     <script src="/bs/js/jquery-1.11.3.js"></script>
     <script src="/bs/js/bootstrap.js"></script>

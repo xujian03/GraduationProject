@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
     <title>支付</title>
     <link rel="stylesheet" href="/bs/css/bootstrap.min.css">
     <link rel="stylesheet" href="/bs/css/bootstrap-select.min.css">

@@ -1,8 +1,10 @@
 /**
  * 用户中心的js文件
  */
-var user=getUser();
 
+var user=getUser();
+if(user==null)//未登录时显示登陆框
+$("#loginModal").modal("show");
 var HEIGHT=$(window).height();
 $("#name").text("姓名："+user.userName);
 $("#studentid").text("学号："+user.userStudentId);
@@ -26,6 +28,7 @@ $('#loadingModal').modal({backdrop: 'static', keyboard: false});
 //初始化函数
 $(function () {
     loadHide();//loading页面隐藏
+
 })
 
 getAddressList();
