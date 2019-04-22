@@ -107,7 +107,7 @@ $("#btnstudentmsg").click(function () {
     var xueyuan=$("#xueyuan").val();
     var banji=$("#banji").val();
     if(xueyuan==null||xueyuan==""||banji==null||banji==""){
-        alert("请选选择");
+        alert("请先选择");
         return;
     }
     $.ajax({
